@@ -1,0 +1,50 @@
+﻿@using BusinessObject;
+@model List<CartItem>
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "ViewCart";
+}
+
+<h1>ViewCart</h1>
+<p>@HttpContextAccessor.HttpContext.Session.GetString("EditCartError")</p>
+<table class="table">
+    <thead>
+        <tr>
+					<td>No</td>
+					<td>Name</td>
+					<td>Weight</td>
+                    <td>UnitPrice</td>
+					<td>Quantity</td>
+					<td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.UnitPrice)
+            </td>
+             <td>
+                <form asp-controller="Cart" asp-action="Edit" method="get">
+                    <input type="hidden" name="productID" value="@item.Product.ProductId">
+                    <input type="number" name="quantity" value="@item.Quantity">
+                    <input type="submit" value="Edit">
+                </form>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-productID="@item.Product.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a asp-action="Pay">Pay</a>

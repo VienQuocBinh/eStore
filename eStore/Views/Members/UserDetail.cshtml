@@ -1,0 +1,89 @@
+﻿@model BusinessObject.Member
+
+@{
+    Layout = null;
+    ViewData["Title"] = "User Detail";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - eStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/eStore.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="container"  style="margin-top:5%">
+        <main role="main" class="pb-3">
+           <div>
+        <h4>Member Detail</h4>
+        <hr />
+        <dl class="row" >
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MemberId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MemberId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CompanyName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.City)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+        </dl>
+    </div>
+    <div class="btn btn-primary">
+        <a asp-action="UserEdit" asp-route-id="@Model?.MemberId" class="text-reset text-decoration-none">Edit</a>
+    </div>
+
+    <div class="btn btn-primary">
+        <a asp-action="UserOrder" asp-route-id="@Model?.MemberId" class="text-reset text-decoration-none">Order</a>
+    </div>
+    <div class="btn btn-primary">
+        <a asp-action="Logout" asp-controller="Login" class="text-reset text-decoration-none">Logout</a>
+    </div>
+        </main>
+    </div>
+    
+    
+    <footer class="border-top text-muted fixed-bottom">
+        <div class="container">
+            &copy; 2022 - eStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (@TempData["empty"] != null)
+    {
+        <script>
+            alert("@TempData["empty"]");
+        </script>
+    }
+
+</body>
+</html>

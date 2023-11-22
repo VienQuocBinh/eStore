@@ -1,0 +1,83 @@
+﻿@model IEnumerable<BusinessObject.Order>
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Order List";
+}
+
+<h1>Order Management</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@HttpContextAccessor.HttpContext.Session.GetString("PayMessage")
+
+<div class="row">
+    <form class="col-5" asp-action="PostusingParameter">
+        <div class="row">
+            <div class="col-5 pe-1">
+                Start: <input class="form-control" value="@ViewData["startDate"]" type="date" id="startdate" name="startdate">
+            </div>
+            <div class="col-5 ps-1">
+                End: <input class="d-inline-block form-control" value="@ViewData["endDate"]" type="date" id="enddate" name="enddate">
+            </div>
+            <div class="col-2 ps-0 d-flex align-items-end">
+                <input class="btn btn-outline-primary" type="submit" value="Search" name="search">
+            </div>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequiredDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Freight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequiredDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Freight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Member.Email)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

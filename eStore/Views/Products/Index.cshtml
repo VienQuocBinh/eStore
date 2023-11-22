@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BusinessObject.Product>
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "ProductList";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1><a asp-action="Index" style="text-decoration: none;" class="d-inline">Product List</a></h1>
+    <div class="row">
+        <form mmethod="post" asp-action="Search" class="col d-flex align-items-baseline">
+            <div class="input-group">
+                <input type="text" placeholder="Search product" class="form-control" name="keyword" value="@ViewData["keyword"]" />
+                <button type="submit" class="btn btn-primary">Go</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<p>
+    @HttpContextAccessor.HttpContext.Session.GetString("PayMessage")
+    @HttpContextAccessor.HttpContext.Session.GetString("CreateProductError")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.UnitInStock)
+            </th>
+            <th class="text-end">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null && Model.ToList().Count != 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.UnitInStock)
+                    </td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a> | 
+                        <a asp-controller="Cart" asp-action="Add" asp-route-productID="@item.ProductId">Add to cart</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <h2>No product found</h2>
+        }
+    </tbody>
+</table>
